@@ -60,9 +60,9 @@ void	init_text_images(t_game *game)
 	init_textures(game);
 	init_images(game);
 	assign_images(game);
-	if (!find_valid_path(game->player->tile, game->door->tile))
+	if (!check_valid_path(game->player->tile, game->door->tile, game))
 	{
 		free_structs(game);
-		exit_with_error("Error: no valid path on the map\n"); //exit
+		exit_with_error("Error: no valid path on the map\n");
 	}
 }

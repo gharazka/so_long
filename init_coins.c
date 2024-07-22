@@ -7,8 +7,9 @@ void	init_coin(t_game *game, t_tile *tile)
 
 	new = (t_coin *)malloc(sizeof(t_coin));
 	if (!new)
-		exit_with_syserror("Error: malloc failed at init_coins:8"); //exit
+		exit_with_syserror("Error: malloc failed at init_coins:8");
 	new->collected = false;
+	new->pathable = false;
 	new->tile = tile;
 	new->img = game->images->coin;
 	new->next = NULL;

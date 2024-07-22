@@ -25,6 +25,7 @@ void	delete_textures(t_textures *textures)
 void	free_essentials(t_coin *root_coin, t_door *door, t_player *player)
 {
 	t_coin	*previous;
+
 	free(player);
 	free(door);
 	previous = root_coin;
@@ -38,9 +39,9 @@ void	free_essentials(t_coin *root_coin, t_door *door, t_player *player)
 
 void	free_tiles(t_tile *root_tile)
 {
-	t_tile *curr;
-	t_tile *curr_line;
-	t_tile *next;
+	t_tile	*curr;
+	t_tile	*curr_line;
+	t_tile	*next;
 
 	curr_line = root_tile;
 	while (curr_line)
@@ -59,9 +60,14 @@ void	free_tiles(t_tile *root_tile)
 
 void	free_structs(t_game *game)
 {
-	delete_images(game->window, game->images);
-	delete_textures(game->textures);
-	free_essentials(game->root_coin, game->door, game->player);
-	free_tiles(game->root_tile);
-	mlx_terminate(game->window);
+	if (game->images)
+		delete_images(game->window, game->images);
+	if (game->textures)
+		delete_textures(game->textures);
+	if (game->root_coin && game->door && game->player)
+		free_essentials(game->root_coin, game->door, game->player);
+	if (game->root_tile)
+		free_tiles(game->root_tile);
+	if (game->window)
+		mlx_terminate(game->window);
 }

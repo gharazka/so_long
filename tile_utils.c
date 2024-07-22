@@ -18,7 +18,7 @@ t_tile	*create_node(int type, int posx, int posy)
 
 	new = (t_tile *)malloc(sizeof(t_tile));
 	if (!new)
-		exit_with_syserror("Error: malloc failed at tile_utils:19"); //exit
+		exit_with_syserror("Error: malloc failed at tile_utils:19");
 	new->type = type;
 	new->left = NULL;
 	new->right = NULL;

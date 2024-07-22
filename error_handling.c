@@ -2,7 +2,7 @@
 
 static int	check_shape(char **map_array, int height)
 {
-	int	i;
+	int		i;
 	size_t	len;
 
 	i = 0;
@@ -83,7 +83,8 @@ void	validate_map(char **map_array, int height, int width)
 	if (!check_shape(map_array, height))
 		free_and_exit(map_array, height, "Error: map not rectangular\n");
 	if (!check_for_bad_chars(map_array, height, width))
-		free_and_exit(map_array, height, "Error: incorrect characters in the map\n");
+		free_and_exit(map_array, height,
+			"Error: incorrect characters in the map\n");
 	if (!check_for_chars(map_array, 'C', height, width))
 		free_and_exit(map_array, height, "Error: no collectibles\n");
 	if (!check_for_chars(map_array, 'D', height, width))
@@ -91,5 +92,6 @@ void	validate_map(char **map_array, int height, int width)
 	if (!check_for_chars(map_array, 'P', height, width))
 		free_and_exit(map_array, height, "Error: no player\n");
 	if (!check_edges(map_array, height, width))
-		free_and_exit(map_array, height, "Error: at least one of the edge tiles doesn't contain a wall\n");
+		free_and_exit(map_array, height,
+			"Error: at least one of the edge tiles doesn't contain a wall\n");
 }

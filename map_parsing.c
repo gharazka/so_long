@@ -35,8 +35,10 @@ static int	get_map_height(char *file_name)
 	i = 0;
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		exit_with_syserror("Error: open failed at map_parsing:36"); //exit
+		exit_with_syserror("Error: open failed at map_parsing:36");
 	line = get_next_line(fd);
+	if (!line)
+		exit_with_error("Error: file empty\n");
 	while (line)
 	{
 		free(line);
@@ -55,13 +57,12 @@ static char	**get_map_array(char *file_name, int height)
 
 	map = (char **)malloc(sizeof(char *) * height);
 	if (!map)
-		exit_with_syserror("Error: malloc failed at map_parsing:56"); //exit
+		exit_with_syserror("Error: malloc failed at map_parsing:56");
 	i = 0;
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
-		free_map_array(map, 0);
-		exit_with_syserror("Error: open failed at map_parsing:60"); //exit
+		exit_with_syserror("Error: open failed at map_parsing:60");
 	}
 	while (i < height)
 	{
@@ -85,6 +86,8 @@ void	get_map(t_game *game, char *file_name)
 	validate_map(map_array, height, width);
 	tile_array = init_tiles(map_array, height, width);
 	game->root_tile = tile_array[0][0];
+	game->height = height * TILE_SIZE;
+	game->width = width * TILE_SIZE;
 	free_map_array(map_array, height);
 	free_tile_array(tile_array, height);
 }

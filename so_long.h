@@ -37,6 +37,7 @@ typedef struct s_coin
 	int				img_index;
 	t_tile			*tile;
 	bool			collected;
+	bool			pathable;
 	struct s_coin	*next;
 }	t_coin;
 
@@ -45,7 +46,8 @@ typedef struct s_door
 	mlx_image_t	*img;
 	mlx_image_t	*img2;
 	t_tile		*tile;
-	int			opened;
+	bool		pathable;
+	bool		opened;
 }	t_door;
 
 typedef struct s_textures
@@ -77,6 +79,9 @@ typedef struct s_game
 	t_door		*door;
 	t_textures	*textures;
 	t_images	*images;
+	int			height;
+	int			width;
+	int			coin_amount;
 }	t_game;
 
 void	get_map(t_game *game, char *file_name);
@@ -87,12 +92,13 @@ void	connect_up_and_down(t_tile *up, t_tile *down);
 t_tile	*create_node(int type, int posx, int posy);
 void	init_text_images(t_game *game);
 void	init_door(t_game *game, t_tile *tile);
+t_game	init_game(t_game game);
 void	display_images(t_game *game);
 void	game_loop(mlx_key_data_t keydata, void *param);
 void	validate_map(char **map_array, int height, int width);
 int		edge_left_to_right(char **map_array, int i, int j, int limit);
 int		edge_up_and_down(char **map_array, int i, int j, int limit);
-int		find_valid_path(t_tile *player_tile, t_tile *door_tile);
+int		check_valid_path(t_tile *player_tile, t_tile *door_tile, t_game *game);
 void	exit_with_error(char *message);
 void	exit_with_syserror(char *message);
 void	free_map_array(char **map_array, int height);

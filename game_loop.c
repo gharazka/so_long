@@ -49,11 +49,11 @@ void	game_loop(mlx_key_data_t keydata, void *param)
 		move(game, game->player->tile->left);
 	if (game->player->tile->coin)
 		collect_coin(game);
-	if (game->player->coins == 6 && !game->door->opened)
+	if (game->player->coins == game->coin_amount && !game->door->opened)
 		open_the_door(game);
 	if (game->door->opened && game->player->tile->door)
 	{
-		mlx_terminate(game->window);
-		exit(0); //exit
+		free_structs(game);
+		exit(EXIT_SUCCESS);
 	}
 }

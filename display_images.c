@@ -41,5 +41,5 @@ void	display_images(t_game *game)
 	mlx_image_to_window(game->window, game->player->img,
 		game->player->tile->x, game->player->tile->y);
 	mlx_image_to_window(game->window, game->door->img2,
-	-500, -500);
+		-500, -500);
 }
