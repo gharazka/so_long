@@ -57,7 +57,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (next)
 		buf = ft_strjoin(buf, next);
-	while (ft_findchar(next, '\n') == -1 && ft_findchar(buf, '\n') == -1)
+	while (ft_findchar(next, '\n') == 0 && ft_findchar(buf, '\n') == 0)
 	{
 		free(next);
 		next = get_str(fd);

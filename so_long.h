@@ -1,10 +1,12 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include <stdio.h>
+# include <string.h>
 # include "lib/MLX42/include/MLX42/MLX42.h"
 # include "lib/libft/inc/libft.h"
 
-# define TILE_SIZE 32
+# define TILE_SIZE 64
 
 typedef struct s_tile
 {
@@ -12,11 +14,13 @@ typedef struct s_tile
 	int				type;
 	int				x;
 	int				y;
+	bool			checked;
 	struct s_tile	*up;
 	struct s_tile	*down;
 	struct s_tile	*left;
 	struct s_tile	*right;
 	struct s_coin	*coin;
+	struct s_door	*door;
 }	t_tile;
 
 typedef struct s_player
@@ -24,6 +28,7 @@ typedef struct s_player
 	mlx_image_t	*img;
 	t_tile		*tile;
 	int			coins;
+	int			moves;
 }	t_player;
 
 typedef struct s_coin
@@ -40,6 +45,7 @@ typedef struct s_door
 	mlx_image_t	*img;
 	mlx_image_t	*img2;
 	t_tile		*tile;
+	int			opened;
 }	t_door;
 
 typedef struct s_textures
@@ -66,19 +72,30 @@ typedef struct s_game
 {
 	mlx_t		*window;
 	t_tile		*root_tile;
-	t_player	player;
+	t_player	*player;
 	t_coin		*root_coin;
-	t_door		door;
-	t_textures	textures;
-	t_images	images;
+	t_door		*door;
+	t_textures	*textures;
+	t_images	*images;
 }	t_game;
 
-int		get_map(t_game *game, char *file_name);
+void	get_map(t_game *game, char *file_name);
 t_tile	***init_tiles(char **map_array, int height, int width);
 void	init_coin(t_game *game, t_tile *tile);
 void	connect_left_and_right(t_tile *left, t_tile *right);
 void	connect_up_and_down(t_tile *up, t_tile *down);
 t_tile	*create_node(int type, int posx, int posy);
-void	init_and_display(t_game *game);
-
+void	init_text_images(t_game *game);
+void	init_door(t_game *game, t_tile *tile);
+void	display_images(t_game *game);
+void	game_loop(mlx_key_data_t keydata, void *param);
+void	validate_map(char **map_array, int height, int width);
+int		edge_left_to_right(char **map_array, int i, int j, int limit);
+int		edge_up_and_down(char **map_array, int i, int j, int limit);
+int		find_valid_path(t_tile *player_tile, t_tile *door_tile);
+void	exit_with_error(char *message);
+void	exit_with_syserror(char *message);
+void	free_map_array(char **map_array, int height);
+void	free_and_exit(char **map_array, int height, char *message);
+void	free_structs(t_game *game);
 #endif

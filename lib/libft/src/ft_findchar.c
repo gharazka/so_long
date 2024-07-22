@@ -6,12 +6,12 @@ int	ft_findchar(const char *s, char c)
 
 	i = 0;
 	if (!s)
-		return (i);
+		return (-1);
 	while (s[i])
 	{
 		if (s[i] == c)
-			return (i);
+			return (-1);
 		i++;
 	}
-	return (-1);
+	return (0);
 }

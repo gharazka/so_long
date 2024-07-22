@@ -18,14 +18,15 @@ t_tile	*create_node(int type, int posx, int posy)
 
 	new = (t_tile *)malloc(sizeof(t_tile));
 	if (!new)
-		return (NULL);
-	//if malloc fails, I don't have a failsafe
+		exit_with_syserror("Error: malloc failed at tile_utils:19"); //exit
 	new->type = type;
 	new->left = NULL;
 	new->right = NULL;
 	new->up = NULL;
 	new->down = NULL;
 	new->coin = NULL;
+	new->door = NULL;
+	new->checked = false;
 	new->x = posx;
 	new->y = posy;
 	return (new);
